@@ -1,29 +1,24 @@
+FROM balenalib/armv7hf-debian:stretch as builder
+
+ENV DEBIAN_FRONTEND noninteractive
+
+WORKDIR /tmp
+
+RUN \
+ apt-get update -qy \
+ && apt-get install -qy \
+    wget \
+ && wget -qO - `wget -qO - https://repo-feed.flightradar24.com/fr24feed_versions.json | grep -Eo 'http://.*?/rpi_binaries/fr24feed_.*?_armhf.tgz'` | tar xzf -
+
 FROM balenalib/armv7hf-debian:stretch
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV DUMP1090_HOST="" DUMP1090_PORT="" FR24_KEY="" 
+ENV DUMP1090_HOST="" DUMP1090_PORT="" FR24_KEY=""
 
-RUN [ "cross-build-start" ]
+WORKDIR /
 
-RUN \
- gpg --keyserver pool.sks-keyservers.net --recv-keys 40C430F5 \
- && gpg --armor --export 40C430F5 | apt-key add - \
-
-# Add APT repository to the config file, removing older entries if exist
-
- && echo 'deb http://repo.feed.flightradar24.com flightradar24 raspberrypi-stable' >> /etc/apt/sources.list.d/fr24.list \
-
- && apt-get update -qy \
- && apt-get install --no-install-recommends -qy \
-    fr24feed \
- && apt-get clean \
- && rm -rf \
-    /tmp/* \
-    /var/lib/apt/lists/* \
-    /var/tmp/*
-
-RUN [ "cross-build-end" ] 
+COPY --from=builder /tmp/fr24feed_armhf/fr24feed /usr/bin/fr24feed
 
 EXPOSE 8754
 

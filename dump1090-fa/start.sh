@@ -6,7 +6,7 @@ mkdir /run/dump1090-fa
 /usr/bin/dump1090-fa \
 --quiet \
 --net \
---net-sbs-port $DUMP1090_SBS_PORT \
+--net-sbs-port $DUMP1090_PORT \
 --lat $DUMP1090_LAT \
 --lon $DUMP1090_LON \
 --write-json /run/dump1090-fa \
