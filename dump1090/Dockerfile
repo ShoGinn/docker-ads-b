@@ -1,4 +1,4 @@
-FROM resin/armv7hf-debian:jessie as builder
+FROM balena/armv7hf-debian:stretch as builder
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -34,11 +34,11 @@ RUN \
 
 RUN [ "cross-build-end" ]
 
-FROM resin/armv7hf-debian:jessie
+FROM balena/armv7hf-debian:stretch
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV DUMP1090_SBS_PORT="" DUMP1090_LAT="" DUMP1090_LON=""
+ENV DUMP1090_PORT="" DUMP1090_LAT="" DUMP1090_LON=""
 
 COPY --from=builder /tmp/*.deb /tmp/
 

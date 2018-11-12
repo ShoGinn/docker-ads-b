@@ -1,4 +1,4 @@
-FROM resin/armv7hf-debian:jessie
+FROM balena/armv7hf-debian:stretch
 
 ENV DEBIAN_FRONTEND noninteractive
 

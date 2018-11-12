@@ -1,4 +1,4 @@
-FROM resin/armv7hf-debian:jessie as builder
+FROM balena/armv7hf-debian:stretch as builder
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -11,7 +11,7 @@ RUN \
  && wget $(wget -qO- https://planefinder.net/sharing/client | egrep armhf.deb | awk -F\" '{print $2}')
 
 
-FROM resin/armv7hf-debian:jessie
+FROM balena/armv7hf-debian:stretch
 
 COPY --from=builder /tmp/*.deb /tmp/
 

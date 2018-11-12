@@ -1,4 +1,4 @@
-FROM resin/armv7hf-debian:stretch as builder
+FROM balena/armv7hf-debian:stretch as builder
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -11,7 +11,7 @@ RUN \
  && wget $(wget -qO- http://flightaware.com/adsb/piaware/install | egrep wget -m 1 | awk '{print $3}' | awk -F\< '{print $1}')
 
 
-FROM resin/armv7hf-debian:stretch
+FROM balena/armv7hf-debian:stretch
 
 ENV DEBIAN_FRONTEND noninteractive
 
