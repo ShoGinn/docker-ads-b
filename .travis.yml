@@ -1,19 +1,28 @@
-sudo: required
-services:
-- docker
 language: bash
+sudo: required
+services: docker
+
 before_script:
-  - echo "Validating Dockerfile..."
-  - docker run --rm -v "$(pwd)/Dockerfile:/Dockerfile:ro" redcoolbeans/dockerlint
+  - env | sort
+  - image="shoginn/${APP}"
 # prepare qemu
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
 before_install:
   - docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
 script:
 # build image
-  - docker build -t shoginn/raspbian-dump1090 .
-  - docker push shoginn/raspbian-dump1090
-notifications:
-  email:
-    on_success: change # default: always
-    on_failure: always # default: always
+  - |
+    (
+      docker build -t "$image" "${APP}"
+      docker push shoginn/${APP}
+    )
+jobs:
+  include:
+    - env: APP=adsb-exchange
+    - env: APP=adsbhub
+    - env: APP=dump1090
+    - env: APP=flightaware
+    - env: APP=flightradar24
+    - env: APP=gpsd
+    - env: APP=opensky
+    - env: APP=planefinder
