@@ -4,7 +4,7 @@ services: docker
 
 before_script:
   - env | sort
-  - image="shoginn/${APP}"
+  - image="shoginn/adsb:rpi-${APP}"
 # prepare qemu
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
 before_install:
@@ -14,7 +14,7 @@ script:
   - |
     (
       docker build -t "$image" "${APP}"
-      docker push shoginn/${APP}
+      docker push "$image"
     )
 jobs:
   include:
