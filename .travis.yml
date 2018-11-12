@@ -21,6 +21,7 @@ jobs:
     - env: APP=adsb-exchange
     - env: APP=adsbhub
     - env: APP=dump1090
+    - env: APP=dump1090-fa
     - env: APP=flightaware
     - env: APP=flightradar24
     - env: APP=gpsd
