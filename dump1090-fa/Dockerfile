@@ -27,6 +27,7 @@ RUN \
  dpkg -i piaware*.deb \
  && apt-get update -qy \
  && apt-get -f install -qy \
+ 	perl \
     lighttpd \
     dump1090-fa \
  && apt-get clean \

@@ -47,6 +47,7 @@ RUN [ "cross-build-start" ]
 RUN \
  apt-get update -qy \
  && apt-get install --no-install-recommends -qy \
+    perl \
     lighttpd \
     libusb-1.0.0-dev \
  && apt-get clean \
