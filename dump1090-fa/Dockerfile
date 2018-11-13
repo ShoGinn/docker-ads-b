@@ -15,7 +15,7 @@ FROM balenalib/armv7hf-debian:stretch
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV DUMP1090_PORT="" DUMP1090_LAT="" DUMP1090_LON=""
+ENV DUMP1090_LAT="" DUMP1090_LON=""
 
 COPY --from=builder /tmp/*.deb /tmp/
 
@@ -27,10 +27,9 @@ RUN \
  dpkg -i piaware*.deb \
  && apt-get update -qy \
  && apt-get -f install -qy \
-    dump1090-fa \
     lighttpd \
+    dump1090-fa \
  && apt-get clean \
- && echo 'blacklist dvb_usb_rtl28xxu' > /etc/modprobe.d/rtlsdr-blacklist.conf \
  && rm -rf \
     /tmp/* \
     /var/lib/apt/lists/* \

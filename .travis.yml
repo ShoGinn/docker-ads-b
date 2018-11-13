@@ -1,6 +1,9 @@
 language: bash
 sudo: required
 services: docker
+branches:
+  only:
+    - master
 
 before_script:
   - env | sort
@@ -13,6 +16,8 @@ script:
 # build image
   - |
     (
+      set -Eeuo pipefail
+      set -x
       docker build -t "$image" "${APP}"
       docker push "$image"
     )

@@ -38,7 +38,7 @@ FROM balenalib/armv7hf-debian:stretch
 
 ENV DEBIAN_FRONTEND noninteractive
 
-ENV DUMP1090_PORT="" DUMP1090_LAT="" DUMP1090_LON=""
+ENV DUMP1090_LAT="" DUMP1090_LON=""
 
 COPY --from=builder /tmp/*.deb /tmp/
 
@@ -50,7 +50,6 @@ RUN \
     lighttpd \
     libusb-1.0.0-dev \
  && apt-get clean \
- && echo 'blacklist dvb_usb_rtl28xxu' > /etc/modprobe.d/rtlsdr-blacklist.conf \
  && dpkg -i /tmp/librtlsdr* \
  && dpkg -i /tmp/dump1090*.deb \
  && rm -rf \
