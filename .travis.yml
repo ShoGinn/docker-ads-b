@@ -8,10 +8,9 @@ branches:
 before_script:
   - env | sort
   - image="shoginn/adsb:rpi-${APP}"
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 # prepare qemu
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
-before_install:
-  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 script:
 # build image
   - |
