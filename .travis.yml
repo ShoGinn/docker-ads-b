@@ -11,7 +11,7 @@ before_script:
 # prepare qemu
   - docker run --rm --privileged multiarch/qemu-user-static:register --reset
 before_install:
-  - docker login -u="$DOCKER_USER" -p="$DOCKER_PASS"
+  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
 script:
 # build image
   - |
