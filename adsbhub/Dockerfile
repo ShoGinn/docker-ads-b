@@ -1,4 +1,4 @@
-FROM balenalib/armv7hf-alpine
+FROM multiarch/alpine:armhf-v3.8
 
 ENV DUMP1090_HOST="" DUMP1090_PORT=""
 
