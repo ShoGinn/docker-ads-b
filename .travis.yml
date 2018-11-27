@@ -30,7 +30,7 @@ before_install:
 
 script:
 # build image
-  -  docker build -t "shoginn/adsb:rpi-${APP}"
+  -  docker build -t "shoginn/adsb:rpi-${APP}" "${APP}"
 deploy:
   provider: script
   script: bash .travis/docker_push.sh
