@@ -42,9 +42,9 @@ RUN \
 
 RUN [ "cross-build-end" ] 
 
-WORKDIR /root
+COPY piaware.conf /etc/piaware.conf
+COPY piaware-runner.sh /usr/bin/piaware-runner
 
-COPY ./start.sh start.sh
-RUN chmod +x start.sh
+EXPOSE 30105/tcp
 
-ENTRYPOINT ["/root/start.sh"]
+ENTRYPOINT ["piaware-runner"]
