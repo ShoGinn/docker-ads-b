@@ -11,7 +11,7 @@ echo "Waiting for dump1090 to start up"
 sleep 5s
 
 echo
-echo "FLIGHTAWARE_FEEDER_ID=${IAWARE_FEEDER_ID}"
+echo "FLIGHTAWARE_FEEDER_ID=${PIAWARE_FEEDER_ID}"
 echo
 
 [[ ! -z ${DUMP1090_HOST} ]]             &&  /usr/bin/piaware-config receiver-host ${DUMP1090_HOST} || DUMP1090_HOST="dump1090"
