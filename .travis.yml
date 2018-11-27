@@ -1,26 +1,14 @@
-language: bash
 sudo: required
-services: docker
+language: generic
+
 branches:
   only:
     - master
 
-before_script:
-  - env | sort
-  - image="shoginn/adsb:rpi-${APP}"
-  - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USER" --password-stdin
-# prepare qemu
-  - docker run --rm --privileged multiarch/qemu-user-static:register --reset
-script:
-# build image
-  - |
-    (
-      set -Eeuo pipefail
-      set -x
-      docker build -t "$image" "${APP}"
-      docker push "$image"
-    )
-jobs:
+services: 
+  - docker
+
+matrix:
   include:
     - env: APP=adsb-exchange
     - env: APP=adsbhub
@@ -31,3 +19,21 @@ jobs:
     - env: APP=gpsd
     - env: APP=opensky
     - env: APP=planefinder
+
+before_install:
+  # exit on error
+  - set -o errexit
+  - set -o pipefail
+  
+  # setup QEMU
+  - docker run --rm --privileged multiarch/qemu-user-static:register
+
+script:
+# build image
+  -  docker build -t "shoginn/adsb:-${APP}"
+deploy:
+  provider: script
+  script: bash .travis/docker_push.sh
+  on:
+    branch:
+      - master
