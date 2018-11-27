@@ -14,11 +14,24 @@ echo
 echo "FLIGHTAWARE_FEEDER_ID=${PIAWARE_FEEDER_ID}"
 echo
 
-[[ ! -z ${DUMP1090_HOST} ]]             &&  /usr/bin/piaware-config receiver-host ${DUMP1090_HOST} || DUMP1090_HOST="dump1090"
-[[ ! -z ${DUMP1090_PORT} ]]             &&  /usr/bin/piaware-config receiver-port ${DUMP1090_PORT} || DUMP1090_PORT="30005"
-[[ ! -z ${PIAWARE_FEEDER_ID} ]]       && /usr/bin/piaware-config feeder-id ${PIAWARE_FEEDER_ID}
+if [ -z "${DUMP1090_HOST}" ]; then
+	echo "No DUMP1090_HOST Set"
+else
+ 	/usr/bin/piaware-config "receiver-host" "${DUMP1090_HOST}"
+fi
 
-if [[ ! -z ${PIAWARE_GPS} ]]; then
+if [ -z "${DUMP1090_PORT}" ]; then
+	echo "No DUMP1090_PORT Set"
+else
+	/usr/bin/piaware-config "receiver-port" "${DUMP1090_PORT}"
+fi
+if [ -z "${PIAWARE_FEEDER_ID}" ]; then
+	echo "No PIAWARE_FEEDER_ID set"
+else
+	/usr/bin/piaware-config "feeder-id" "${PIAWARE_FEEDER_ID}"
+fi
+
+if [ ! -z ${PIAWARE_GPS} ]; then
     echo "Enabling GPS"
     /usr/sbin/gpsd -n ${PIAWARE_GPS}
 fi
