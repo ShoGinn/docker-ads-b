@@ -42,7 +42,6 @@ RUN \
 
 RUN [ "cross-build-end" ] 
 
-COPY piaware.conf /etc/piaware.conf
 COPY piaware-runner.sh /usr/bin/piaware-runner
 
 EXPOSE 30105/tcp
