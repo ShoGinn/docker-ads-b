@@ -24,6 +24,9 @@ before_install:
   # exit on error
   - set -o errexit
   - set -o pipefail
+
+  # Pull image to help with cache
+  - docker pull "shoginn/adsb:rpi-${APP}" || true
   
   # setup QEMU
   - docker run --rm --privileged multiarch/qemu-user-static:register
