@@ -1,9 +1,14 @@
 #!/bin/bash
-mkdir -p /run/dump1090-fa
-
-/usr/sbin/service lighttpd start
-
-/usr/bin/dump1090-fa \
+[[ ! -z ${DUMP1090_WEB} ]] && echo "Web Disabled" \
+&& /usr/bin/dump1090-fa \
+--quiet \
+--net \
+--lat $DUMP1090_LAT \
+--lon $DUMP1090_LON \
+|| \
+mkdir -p /run/dump1090-fa \
+&& /usr/sbin/service lighttpd start \
+&& /usr/bin/dump1090-fa \
 --quiet \
 --net \
 --lat $DUMP1090_LAT \
