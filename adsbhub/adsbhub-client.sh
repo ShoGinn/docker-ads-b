@@ -7,17 +7,21 @@ set -o nounset          # Disallow expansion of unset variables
 set -o xtrace          # Trace the execution of the script (debug)
 
 
+DUMP1090_SERVER='dump1090'
+DUMP1090_PORT='30002'
+
+
 echo "Waiting for dump1090 to start up"
 sleep 5s
 
 echo "Ping test to dump1090"
-ping -c 3 "${DUMP1090_HOST}"
+ping -c 3 "${DUMP1090_SERVER}"
 
 while true; do
-  echo "Starting replay from TCP:${DUMP1090_HOST}:${DUMP1090_PORT} to TCP:data.adsbhub.org:5001"
+  echo "Starting replay from TCP:${DUMP1090_SERVER}:${DUMP1090_PORT} to TCP:data.adsbhub.org:5001"
   
   set +o errexit
-  socat -d -d -u "TCP:${DUMP1090_HOST}:${DUMP1090_PORT}" 'TCP:data.adsbhub.org:5001'
+  socat -d -d -u "TCP:${DUMP1090_SERVER}:${DUMP1090_PORT}" 'TCP:data.adsbhub.org:5001'
   SOCAT_STATUS=${?}
   set -o errexit
   

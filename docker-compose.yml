@@ -1,0 +1,174 @@
+version: '3.6'
+
+services:
+  # dump1090 ##################################################################
+  dump1090:
+    image: shoginn/docker-adsb-dump1090:${TAG:-latest}
+    build:
+      context: dump1090
+      dockerfile: Dockerfile-dump1090
+      cache_from:
+        - shoginn/docker-adsb-dump1090
+        - shoginn/docker-adsb-dump1090:${TAG:-latest}
+      args:
+        DUMP1090_VERSION: git-fb5942d
+        DUMP1090_GIT_HASH: fb5942dba6505a21cbafc7905a5a7c513b214dc9
+        DUMP1090_TAR_HASH: cbdd9ac6d930c0bde65aefa74a07e045d2ebf1debed49f0d3ff8c9d349ce00f8
+    #ports:
+    #  - "30002:30002/tcp"
+    #  - "30005:30005/tcp"
+    devices:
+      - "/dev/bus/usb/001/007"
+    env_file:
+      - variables-dump1090.env
+    cap_add:
+      - SYS_NICE
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.hostname == shed
+      restart_policy:
+        condition: always
+        delay: 5s
+      resources:
+        reservations:
+          cpus: '1.0'
+
+  # flightradar24 #############################################################
+  flightradar24:
+    image: shoginn/docker-adsb-flightradar24:${TAG:-latest}
+    build:
+      context: flightradar24
+      dockerfile: Dockerfile-flightradar24
+      cache_from:
+        - shoginn/docker-adsb-flightradar24
+        - shoginn/docker-adsb-flightradar24:${TAG:-latest}
+      args:
+        FR24FEED_VERSION: 1.0.19-15
+        FR24FEED_HASH: ea2674b5eaa071d3e469a103971a2d42973014d5fde8fd3b0fe123dbd4f1476b
+    ports:
+      - "8754:8754/tcp"
+    depends_on:
+      - dump1090
+    env_file:
+      - variables-flightradar24.env
+    deploy:
+      mode: global
+      restart_policy:
+        condition: always
+        delay: 5s
+  
+  # planefinder ###############################################################
+  planefinder:
+    image: shoginn/docker-adsb-planefinder:${TAG:-latest}
+    build:
+      context: planefinder
+      dockerfile: Dockerfile-planefinder
+      cache_from:
+        - shoginn/docker-adsb-planefinder
+        - shoginn/docker-adsb-planefinder:${TAG:-latest}
+      args:
+        PFCLIENT_VERSION: 4.1.1
+        PFCLIENT_HASH: c2411ca2c9ce1a6a00c1c8af0ce3f7f9
+    ports:
+      - "30053:30053/tcp"
+    depends_on:
+      - dump1090
+    env_file:
+      - variables-planefinder.env
+    deploy:
+      mode: global
+      restart_policy:
+        condition: always
+        delay: 5s
+
+  # adsbexchange-mlat #########################################################
+  adsbexchange-mlat:
+    image: shoginn/docker-adsb-adsbexchange-mlat:${TAG:-latest}
+    build:
+      context: adsbexchange-mlat
+      dockerfile: Dockerfile-adsbexchange-mlat
+      cache_from:
+        - shoginn/docker-adsb-adsbexchange-mlat
+        - shoginn/docker-adsb-adsbexchange-mlat:${TAG:-latest}
+      args:
+        MLAT_CLIENT_VERSION: 3c3538b53363f5e0bf4271cef20be4cea79d052f
+        MLAT_CLIENT_HASH: 31d64bb26e550632e45d7107ff766573fcc5c28ee014462d866420b810b57910
+    ports:
+      - "30104:30104/tcp"
+    depends_on:
+      - dump1090
+    env_file:
+      - variables-adsbexchange-mlat.env
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
+
+  # adsbhub ###################################################################
+  adsbhub:
+    image: shoginn/docker-adsb-adsbhub:${TAG:-latest}
+    build:
+      context: adsbhub
+      dockerfile: Dockerfile-adsbhub
+      cache_from:
+        - shoginn/docker-adsb-adsbhub
+        - shoginn/docker-adsb-adsbhub:${TAG:-latest}
+    depends_on:
+      - dump1090
+    env_file:
+      - variables-adsbhub.env
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
+
+  # openskynetwork ############################################################
+  openskynetwork:
+    image: shoginn/docker-adsb-openskynetwork:${TAG:-latest}
+    build:
+      context: openskynetwork
+      dockerfile: Dockerfile-openskynetwork
+      cache_from:
+        - shoginn/docker-adsb-openskynetwork
+        - shoginn/docker-adsb-openskynetwork:${TAG:-latest}
+    ports:
+      - "30975:30005/tcp"
+    depends_on:
+      - dump1090
+    env_file:
+      - variables-openskynetwork.env
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
+
+  # flightaware ###############################################################
+  flightaware:
+    image: shoginn/docker-adsb-flightaware:${TAG:-latest}
+    build:
+      context: flightaware
+      dockerfile: Dockerfile-flightaware
+      cache_from:
+        - shoginn/docker-adsb-flightaware
+        - shoginn/docker-adsb-flightaware:${TAG:-latest}
+      args:
+        TCLLAUNCHER_VERSION: v1.6
+        TCLLAUNCHER_HASH: 14b20d4f29c0abf758d28eb4b7af86cfe4e6c70311a4b58f553bd1b8944f52e6
+        FAUP1090_VERSION: v3.5.3
+        FAUP1090_HASH: 546b458738e25c2a6454b0396344549b15199dcb9ed0307a8d15f0ee25fb016f
+        MLAT_CLIENT_VERSION: c604f5c9bc5207464f95015c7f97a94f24076d69
+        MLAT_CLIENT_HASH: 4feb73414bd85f051320394d290101290760995dacae936a03a4c208560bc73c
+        PIAWARE_VERSION: v3.5.3
+        PIAWARE_HASH: 15debeb70b1a639644aa4e7a3a93f4749a14bc61969f6b49f1f438c91f5146f4
+    ports:
+      - "30105:30105/tcp"
+    depends_on:
+      - dump1090
+    env_file:
+      - variables-flightaware.env
+    deploy:
+      restart_policy:
+        condition: always
+        delay: 5s
