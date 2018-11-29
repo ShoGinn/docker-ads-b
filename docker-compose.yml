@@ -4,6 +4,7 @@ services:
   # dump1090 ##################################################################
   dump1090-fa:
     image: shoginn/docker-ads-b-dump1090-fa:${TAG:-latest}
+    hostname: dump1090
     build:
       context: dump1090-fa
       dockerfile: Dockerfile-dump1090-fa
@@ -23,11 +24,7 @@ services:
       - variables-dump1090.env
     cap_add:
       - SYS_NICE
-    deploy:
-      mode: global
-      restart_policy:
-        condition: always
-        delay: 5s
+    restart: always
 
   # flightradar24 #############################################################
   flightradar24:
@@ -47,11 +44,7 @@ services:
       - dump1090-fa
     env_file:
       - variables-flightradar24.env
-    deploy:
-      mode: global
-      restart_policy:
-        condition: always
-        delay: 5s
+    restart: always
   
   # planefinder ###############################################################
   planefinder:
@@ -71,11 +64,7 @@ services:
       - dump1090-fa
     env_file:
       - variables-planefinder.env
-    deploy:
-      mode: global
-      restart_policy:
-        condition: always
-        delay: 5s
+    restart: always
 
   # adsbexchange-mlat #########################################################
   adsbexchange-mlat:
@@ -95,10 +84,7 @@ services:
       - dump1090-fa
     env_file:
       - variables-adsbexchange-mlat.env
-    deploy:
-      restart_policy:
-        condition: always
-        delay: 5s
+    restart: always
 
   # adsbhub ###################################################################
   adsbhub:
@@ -113,10 +99,7 @@ services:
       - dump1090-fa
     env_file:
       - variables-adsbhub.env
-    deploy:
-      restart_policy:
-        condition: always
-        delay: 5s
+    restart: always
 
   # openskynetwork ############################################################
   openskynetwork:
@@ -131,10 +114,7 @@ services:
       - dump1090-fa
     env_file:
       - variables-openskynetwork.env
-    deploy:
-      restart_policy:
-        condition: always
-        delay: 5s
+    restart: always
 
   # flightaware ###############################################################
   flightaware:
@@ -160,7 +140,4 @@ services:
       - dump1090-fa
     env_file:
       - variables-flightaware.env
-    deploy:
-      restart_policy:
-        condition: always
-        delay: 5s
+    restart: always
