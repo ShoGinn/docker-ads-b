@@ -2,11 +2,11 @@ version: '3.6'
 
 services:
   # dump1090 ##################################################################
-  dump1090:
+  dump1090-fa:
     image: shoginn/docker-ads-b-dump1090-fa:${TAG:-latest}
     build:
-      context: dump1090
-      dockerfile: Dockerfile-dump1090
+      context: dump1090-fa
+      dockerfile: Dockerfile-dump1090-fa
       cache_from:
         - shoginn/docker-ads-b-dump1090-fa
         - shoginn/docker-ads-b-dump1090-fa:${TAG:-latest}
