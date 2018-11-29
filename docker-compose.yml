@@ -147,13 +147,13 @@ services:
         - shoginn/docker-ads-b-flightaware:${TAG:-latest}
       args:
         TCLLAUNCHER_VERSION: v1.8
-        TCLLAUNCHER_HASH: 969e44d4236fdbc76cb0ec910269f34dcc486fe6
+        TCLLAUNCHER_HASH: f2afbf74e11a40501373099684766731dd59dfc2b9c85ba04892e6cdb2435f72
         FAUP1090_VERSION: v3.6.3
         FAUP1090_HASH: cdba7566fde1ab45186f2dc4ea53e0594de484b1
         MLAT_CLIENT_VERSION: 3c3538b53363f5e0bf4271cef20be4cea79d052f
         MLAT_CLIENT_HASH: 31d64bb26e550632e45d7107ff766573fcc5c28ee014462d866420b810b57910
         PIAWARE_VERSION: v3.6.3
-        PIAWARE_HASH: 30cb4715978998af7d6035fc0f8df5530cf15393
+        PIAWARE_HASH: 0019dfc4b32d63c1392aa264aed2253c1e0c2fb09216f8e2cc269bbfb8bb49b5
     ports:
       - "30105:30105/tcp"
     depends_on:
