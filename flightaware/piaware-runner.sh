@@ -11,14 +11,15 @@ echo "Waiting for dump1090 to start up"
 sleep 5s
 
 echo
-echo "FLIGHTAWARE_FEEDER_ID=${PIAWARE_FEEDER_ID}"
+echo "FLIGHTAWARE_FEEDER_ID=${FLIGHTAWARE_FEEDER_ID}"
 echo
 
-if [ -z "${PIAWARE_FEEDER_ID}" ]; then
-	echo "No PIAWARE_FEEDER_ID set"
+if [ -z "${FLIGHTAWARE_FEEDER_ID}" ]; then
+    echo "No FLIGHTAWARE_FEEDER_ID set"
 else
-	/usr/bin/piaware-config "feeder-id" "${PIAWARE_FEEDER_ID}"
+    piaware-config "feeder-id" "${FLIGHTAWARE_FEEDER_ID}"
 fi
+
 
 # Fix issue with fa-mlat-client
 # The fa-mlat-client is run as "nobody" with most permissions dropped.

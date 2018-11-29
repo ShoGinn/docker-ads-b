@@ -1,4 +1,4 @@
-version: '3.6'
+version: '3.2'
 
 services:
   # dump1090 ##################################################################
@@ -14,9 +14,9 @@ services:
         DUMP1090_VERSION: v3.6.3
         DUMP1090_GIT_HASH: cdba7566fde1ab45186f2dc4ea53e0594de484b1
         DUMP1090_TAR_HASH: 80aa0d3d5cfa40dad1e579f2320c0e884145862acff28b3e1da3b99a811f4810
-    #ports:
-    #  - "30002:30002/tcp"
-    #  - "30005:30005/tcp"
+    ports:
+      - "30002:30002/tcp"
+      - "30005:30005/tcp"
     devices:
       - "/dev/bus/usb/001/009"
     env_file:
@@ -125,14 +125,8 @@ services:
         - shoginn/docker-ads-b-flightaware
         - shoginn/docker-ads-b-flightaware:${TAG:-latest}
       args:
-        TCLLAUNCHER_VERSION: v1.8
-        TCLLAUNCHER_HASH: f2afbf74e11a40501373099684766731dd59dfc2b9c85ba04892e6cdb2435f72
-        FAUP1090_VERSION: v3.6.3
-        FAUP1090_HASH: 5edf3ffce3f1336b27c869d5a031a513f6abb834215c249269fbbcf3356c5caa
-        MLAT_CLIENT_VERSION: 59e3d57ec0772d0dc5d7cde5a02130548a584840
-        MLAT_CLIENT_HASH: 86b89b3dc1fb01a0d210fbeb04b24e240f5f2f54c1532e9d6fb3c550e75cf12f
-        PIAWARE_VERSION: v3.6.3
-        PIAWARE_HASH: d5b31103cb09b79d49674558f6d1a3eaa9a297db99e3cfd5aa98733017adc337
+        PIAWARE_VERSION: 3.6.3
+        PIAWARE_HASH: a16c7a1fc0b245a132177351c63eac159c6f7709dd85f41cb8d0a6ac9168c1ca
     ports:
       - "30105:30105/tcp"
     depends_on:

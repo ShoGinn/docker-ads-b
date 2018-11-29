@@ -17,22 +17,13 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
 FROM base as builder
 
 ENV LC_ALL=C.UTF-8 LANG=C.UTF-8
-RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
-    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
-        wget ca-certificates && \
-    DEBIAN_FRONTEND=noninteractive apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
-RUN wget $(wget -qO- http://flightaware.com/adsb/piaware/install | egrep wget -m 1 | awk '{print $3}' | awk -F\< '{print $1}') && \
-    dpkg -i piaware*.deb \
-    && DEBIAN_FRONTEND=noninteractive apt-get update \
+RUN curl --output piaware.deb "http://flightaware.com/adsb/piaware/files/packages/pool/piaware/p/piaware-support/piaware-repository_${PIAWARE_VERSION}_all.deb" && \
+    sha256sum piaware.deb && echo "${PIAWARE_HASH}  piaware.deb" | sha256sum -c
+RUN dpkg -i piaware.deb 
+RUN DEBIAN_FRONTEND=noninteractive apt-get update \
     && DEBIAN_FRONTEND=noninteractive apt-get -f install -y \
     piaware \
-    && DEBIAN_FRONTEND=noninteractive apt-get -f install \
-    && DEBIAN_FRONTEND=noninteractive apt-get clean \
-    && rm -rf \
-      /tmp/* \
-      /var/lib/apt/lists/* \
-      /var/tmp/*
+    && DEBIAN_FRONTEND=noninteractive apt-get -f install 
 
 # final image #################################################################
 FROM base
