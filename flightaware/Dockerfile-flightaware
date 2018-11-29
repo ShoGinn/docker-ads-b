@@ -65,6 +65,7 @@ RUN curl --output mlat-client.tar.gz -L "https://github.com/mutability/mlat-clie
     sha256sum mlat-client.tar.gz && echo "${MLAT_CLIENT_HASH}  mlat-client.tar.gz" | sha256sum -c
 RUN mkdir mlat-client && cd mlat-client && \
     tar -xvf ../mlat-client.tar.gz --strip-components=1
+WORKDIR mlat-client
 RUN dpkg-buildpackage -b -uc && \
     dpkg -i /mlat-client*.deb
 
