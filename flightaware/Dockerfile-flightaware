@@ -1,5 +1,20 @@
 # base ########################################################################
-FROM multiarch/debian-debootstrap:armhf-buster-slim as builder
+FROM multiarch/debian-debootstrap:armhf-buster-slim as base
+
+ENV LC_ALL=C.UTF-8 LANG=C.UTF-8
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+        curl ca-certificates \
+        net-tools iproute2 \
+        tclx8.4 tcl8.6 tcllib tcl-tls itcl3 \
+        python3 \
+        procps && \
+    DEBIAN_FRONTEND=noninteractive apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+
+# builder ########################################################################
+FROM base as builder
 
 ENV LC_ALL=C.UTF-8 LANG=C.UTF-8
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
@@ -20,7 +35,7 @@ RUN wget $(wget -qO- http://flightaware.com/adsb/piaware/install | egrep wget -m
       /var/tmp/*
 
 # final image #################################################################
-FROM multiarch/debian-debootstrap:armhf-buster-slim
+FROM base
 
 COPY --from=builder /usr/lib/Tcllauncher1.8 /usr/lib/Tcllauncher1.8
 
@@ -32,9 +47,6 @@ COPY --from=builder /usr/lib/piaware-config /usr/lib/piaware-config
 
 COPY --from=builder /usr/bin/piaware-status /usr/bin/piaware-status
 COPY --from=builder /usr/lib/piaware-status /usr/lib/piaware-status
-
-#COPY --from=builder /usr/bin/pirehose /usr/bin/pirehose
-#COPY --from=builder /usr/lib/pirehose /usr/lib/pirehose
 
 COPY --from=builder /usr/lib/piaware_packages /usr/lib/piaware_packages
 COPY --from=builder /usr/lib/fa_adept_codec /usr/lib/fa_adept_codec
