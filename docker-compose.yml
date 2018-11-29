@@ -126,7 +126,7 @@ services:
         - shoginn/docker-ads-b-flightaware:${TAG:-latest}
       args:
         PIAWARE_VERSION: 3.6.3
-        PIAWARE_HASH: d8cca9f0764811f247b2095810e6c4a3915a9b1d9e7843a67d43441a7a5b4fcb
+        PIAWARE_HASH: a16c7a1fc0b245a132177351c63eac159c6f7709dd85f41cb8d0a6ac9168c1ca
     ports:
       - "30105:30105/tcp"
     depends_on:
