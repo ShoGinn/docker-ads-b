@@ -44,7 +44,7 @@ services:
     ports:
       - "8754:8754/tcp"
     depends_on:
-      - dump1090
+      - dump1090-fa
     env_file:
       - variables-flightradar24.env
     deploy:
@@ -68,7 +68,7 @@ services:
     ports:
       - "30053:30053/tcp"
     depends_on:
-      - dump1090
+      - dump1090-fa
     env_file:
       - variables-planefinder.env
     deploy:
@@ -92,7 +92,7 @@ services:
     ports:
       - "30104:30104/tcp"
     depends_on:
-      - dump1090
+      - dump1090-fa
     env_file:
       - variables-adsbexchange-mlat.env
     deploy:
@@ -110,7 +110,7 @@ services:
         - shoginn/docker-ads-b-adsbhub
         - shoginn/docker-ads-b-adsbhub:${TAG:-latest}
     depends_on:
-      - dump1090
+      - dump1090-fa
     env_file:
       - variables-adsbhub.env
     deploy:
@@ -128,7 +128,7 @@ services:
         - shoginn/docker-ads-b-openskynetwork
         - shoginn/docker-ads-b-openskynetwork:${TAG:-latest}
     depends_on:
-      - dump1090
+      - dump1090-fa
     env_file:
       - variables-openskynetwork.env
     deploy:
@@ -157,7 +157,7 @@ services:
     ports:
       - "30105:30105/tcp"
     depends_on:
-      - dump1090
+      - dump1090-fa
     env_file:
       - variables-flightaware.env
     deploy:
