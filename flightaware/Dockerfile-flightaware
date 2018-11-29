@@ -16,6 +16,9 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
 # builder ########################################################################
 FROM base as builder
 
+ARG PIAWARE_VERSION
+ARG PIAWARE_HASH
+
 ENV LC_ALL=C.UTF-8 LANG=C.UTF-8
 RUN curl --output piaware.deb "http://flightaware.com/adsb/piaware/files/packages/pool/piaware/p/piaware-support/piaware-repository_${PIAWARE_VERSION}_all.deb" && \
     sha256sum piaware.deb && echo "${PIAWARE_HASH}  piaware.deb" | sha256sum -c
