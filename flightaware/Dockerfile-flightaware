@@ -56,15 +56,17 @@ RUN make RTLSDR=no BLADERF=no DUMP1090_VERSION="piaware-adsb-docker" faup1090
 # fa-mlat-client ##############################################################
 FROM builder-base as fa-mlat-client
 
-RUN apt-get install -y --no-install-recommends python3-dev python3-pip python3-setuptools
-RUN pip3 install --upgrade shiv importlib-resources==0.8
+RUN apt-get install -y --no-install-recommends build-essential python-dev python3.7-dev debhelper
 
 ARG MLAT_CLIENT_VERSION
 ARG MLAT_CLIENT_HASH
 
-RUN curl --output mlat-client.tar.gz -L "https://github.com/ShoGinn/mlat-client/archive/${MLAT_CLIENT_VERSION}.tar.gz" && \
+RUN curl --output mlat-client.tar.gz -L "https://github.com/mutability/mlat-client/archive/${MLAT_CLIENT_VERSION}.tar.gz" && \
     sha256sum mlat-client.tar.gz && echo "${MLAT_CLIENT_HASH}  mlat-client.tar.gz" | sha256sum -c
-run shiv -c fa-mlat-client -o /usr/local/bin/fa-mlat-client /mlat-client.tar.gz
+RUN mkdir mlat-client && cd mlat-client && \
+    tar -xvf ../mlat-client.tar.gz --strip-components=1
+RUN dpkg-buildpackage -b -uc && \
+    dpkg -i /mlat-client*.deb
 
 
 # piaware #####################################################################
@@ -112,7 +114,7 @@ COPY --from=piaware /usr/lib/fa_adept_codec /usr/lib/fa_adept_codec
 
 COPY --from=faup1090 /faup1090/faup1090 /usr/lib/piaware/helpers/faup1090
 
-COPY --from=fa-mlat-client /usr/local/bin/fa-mlat-client /usr/lib/piaware/helpers/fa-mlat-client
+COPY --from=fa-mlat-client /usr/bin/fa-mlat-client /usr/lib/piaware/helpers/fa-mlat-client
 
 COPY piaware.conf /etc/piaware.conf
 COPY piaware-runner.sh /usr/bin/piaware-runner
