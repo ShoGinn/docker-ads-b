@@ -20,7 +20,7 @@ env:
 
 matrix:
   include:
-    - env: SUB_IMAGE=dump1090-fa
+    - env: SUB_IMAGE=dump1090
     - env: SUB_IMAGE=adsbexchange-mlat
     - env: SUB_IMAGE=adsbhub
     - env: SUB_IMAGE=flightaware

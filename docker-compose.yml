@@ -2,15 +2,14 @@ version: '3.6'
 
 services:
   # dump1090 ##################################################################
-  dump1090-fa:
-    image: shoginn/docker-ads-b-dump1090-fa:${TAG:-latest}
-    hostname: dump1090
+  dump1090:
+    image: shoginn/docker-ads-b-dump1090:${TAG:-latest}
     build:
-      context: dump1090-fa
-      dockerfile: Dockerfile-dump1090-fa
+      context: dump1090
+      dockerfile: Dockerfile-dump1090
       cache_from:
-        - shoginn/docker-ads-b-dump1090-fa
-        - shoginn/docker-ads-b-dump1090-fa:${TAG:-latest}
+        - shoginn/docker-ads-b-dump1090
+        - shoginn/docker-ads-b-dump1090:${TAG:-latest}
       args:
         DUMP1090_VERSION: v3.6.3
         DUMP1090_GIT_HASH: cdba7566fde1ab45186f2dc4ea53e0594de484b1
@@ -41,7 +40,7 @@ services:
     ports:
       - "8754:8754/tcp"
     depends_on:
-      - dump1090-fa
+      - dump1090
     env_file:
       - variables-flightradar24.env
     restart: always
@@ -61,7 +60,7 @@ services:
     ports:
       - "30053:30053/tcp"
     depends_on:
-      - dump1090-fa
+      - dump1090
     env_file:
       - variables-planefinder.env
     restart: always
@@ -81,7 +80,7 @@ services:
     ports:
       - "30104:30104/tcp"
     depends_on:
-      - dump1090-fa
+      - dump1090
     env_file:
       - variables-adsbexchange-mlat.env
     restart: always
@@ -96,7 +95,7 @@ services:
         - shoginn/docker-ads-b-adsbhub
         - shoginn/docker-ads-b-adsbhub:${TAG:-latest}
     depends_on:
-      - dump1090-fa
+      - dump1090
     env_file:
       - variables-adsbhub.env
     restart: always
@@ -111,7 +110,7 @@ services:
         - shoginn/docker-ads-b-openskynetwork
         - shoginn/docker-ads-b-openskynetwork:${TAG:-latest}
     depends_on:
-      - dump1090-fa
+      - dump1090
     env_file:
       - variables-openskynetwork.env
     restart: always
@@ -137,7 +136,7 @@ services:
     ports:
       - "30105:30105/tcp"
     depends_on:
-      - dump1090-fa
+      - dump1090
     env_file:
       - variables-flightaware.env
     restart: always

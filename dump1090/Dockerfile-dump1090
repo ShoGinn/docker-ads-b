@@ -46,7 +46,7 @@ ENTRYPOINT ["tini", "--", "nice", "-n", "-5", "dump1090", "--net", "--net-bind-a
 # Metadata
 ARG VCS_REF="Unknown"
 LABEL maintainer="ginnserv@gmail.com" \
-      org.label-schema.name="Docker ADS-B - dump1090-fa" \
+      org.label-schema.name="Docker ADS-B - dump1090" \
       org.label-schema.description="Docker container for ADS-B - This is the flightaware dump1090 component" \
       org.label-schema.url="https://github.com/ShoGinn/docker-ads-b" \
       org.label-schema.vcs-ref="${VCS_REF}" \
