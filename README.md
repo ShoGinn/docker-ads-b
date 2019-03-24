@@ -17,6 +17,14 @@ supporting outputs to the following sites:
 and local viewing via:
 * planefinder web UI
 
+# Requirements
+
+This setup currently is for docker on your raspberry pi running raspbian.
+
+It requires a manual raspbian/docker-compose setup (not the normal apt package) due to the version of yaml im using.
+
+I'll post a more comprehensive version list at a later date
+
 # Status
 | Branch | Status |
 |--------|--------|
