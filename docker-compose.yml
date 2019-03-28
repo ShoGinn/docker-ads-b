@@ -11,9 +11,9 @@ services:
         - shoginn/docker-ads-b-dump1090
         - shoginn/docker-ads-b-dump1090:${TAG:-latest}
       args:
-        DUMP1090_VERSION: v3.6.3
-        DUMP1090_GIT_HASH: cdba7566fde1ab45186f2dc4ea53e0594de484b1
-        DUMP1090_TAR_HASH: 80aa0d3d5cfa40dad1e579f2320c0e884145862acff28b3e1da3b99a811f4810
+        DUMP1090_VERSION: v3.7.0
+        DUMP1090_GIT_HASH: a654c60d65177c7156f8010d56e308836d91f02c
+        DUMP1090_TAR_HASH: d10eab3ea434ad6c8d6222f19dda89bc33325dcf64d3d45bde1e5a55d64fdf0f
     ports:
       - "30002:30002/tcp"
       - "30005:30005/tcp"
@@ -125,8 +125,8 @@ services:
         - shoginn/docker-ads-b-flightaware
         - shoginn/docker-ads-b-flightaware:${TAG:-latest}
       args:
-        PIAWARE_VERSION: 3.6.3
-        PIAWARE_HASH: a16c7a1fc0b245a132177351c63eac159c6f7709dd85f41cb8d0a6ac9168c1ca
+        PIAWARE_VERSION: 3.7.0
+        PIAWARE_HASH: e1c4b6955a189f58a4e10b66a2fc8a27b7ac07333cc20393ed420a2902532c8e
     ports:
       - "30105:30105/tcp"
     depends_on:
