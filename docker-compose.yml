@@ -11,9 +11,9 @@ services:
         - shoginn/docker-ads-b-dump1090
         - shoginn/docker-ads-b-dump1090:${TAG:-latest}
       args:
-        DUMP1090_VERSION: v3.7.0
-        DUMP1090_GIT_HASH: a654c60d65177c7156f8010d56e308836d91f02c
-        DUMP1090_TAR_HASH: d10eab3ea434ad6c8d6222f19dda89bc33325dcf64d3d45bde1e5a55d64fdf0f
+        DUMP1090_VERSION: v3.7.0.1
+        DUMP1090_GIT_HASH: 883399cee3bc7e6c990b1b706537fa2673900696
+        DUMP1090_TAR_HASH: b21803c32d10a059122d1206f96592a94e4470717097c7cc5f07eb0cd9ea2646
     ports:
       - "30002:30002/tcp"
       - "30005:30005/tcp"
