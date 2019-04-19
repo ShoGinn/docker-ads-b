@@ -23,6 +23,7 @@ ENV LC_ALL=C.UTF-8 LANG=C.UTF-8
 
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
   DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+  ca-certificates \
   libboost-system-dev \
   libboost-program-options-dev \
   libboost-regex-dev \
