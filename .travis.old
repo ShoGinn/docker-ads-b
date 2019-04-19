@@ -1,0 +1,59 @@
+sudo: required
+language: generic
+
+branches:
+  only:
+    - latest
+
+addons:
+  apt:
+    packages:
+      - docker-ce
+
+services: 
+  - docker
+
+env:
+  global:
+    - DOCKER_COMPOSE_VERSION=1.21.2
+
+
+matrix:
+  include:
+    - env: SUB_IMAGE=dump1090
+    - env: SUB_IMAGE=adsbexchange-mlat
+    - env: SUB_IMAGE=adsbhub
+    - env: SUB_IMAGE=flightaware
+    - env: SUB_IMAGE=flightradar24
+    - env: SUB_IMAGE=openskynetwork
+    - env: SUB_IMAGE=planefinder
+
+before_install:
+  # exit on error
+  - set -o errexit
+  - set -o pipefail
+
+  # Update Docker
+  - sudo rm /usr/local/bin/docker-compose
+  - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+  - chmod +x docker-compose
+  - sudo mv docker-compose /usr/local/bin
+  
+  # Pull images to help with cache (allow failure as tag may not exist)
+  - docker pull "shoginn/docker-ads-b-${SUB_IMAGE}:${TRAVIS_BRANCH}" || true
+  
+  # setup QEMU
+  - docker run --rm --privileged multiarch/qemu-user-static:register
+
+script:
+  - TAG="${TRAVIS_BRANCH}"
+    docker-compose build
+      --build-arg VCS_REF=$(git rev-parse --short HEAD)
+      "${SUB_IMAGE}"
+
+deploy:
+  provider: script
+  script: bash .travis/docker_push.sh
+  on:
+    branch:
+      - latest

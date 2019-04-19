@@ -20,13 +20,38 @@ ARG PIAWARE_VERSION
 ARG PIAWARE_HASH
 
 ENV LC_ALL=C.UTF-8 LANG=C.UTF-8
-RUN curl --output piaware.deb "http://flightaware.com/adsb/piaware/files/packages/pool/piaware/p/piaware-support/piaware-repository_${PIAWARE_VERSION}_all.deb" && \
-    sha256sum piaware.deb && echo "${PIAWARE_HASH}  piaware.deb" | sha256sum -c
-RUN dpkg -i piaware.deb 
-RUN DEBIAN_FRONTEND=noninteractive apt-get update \
-    && DEBIAN_FRONTEND=noninteractive apt-get -f install -y \
-    piaware \
-    && DEBIAN_FRONTEND=noninteractive apt-get -f install 
+
+RUN DEBIAN_FRONTEND=noninteractive apt-get update && \
+  DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+  libboost-system-dev \
+  libboost-program-options-dev \
+  libboost-regex-dev \
+  libboost-filesystem-dev \
+  git \
+  wget \
+  build-essential \
+  debhelper \
+  tcl8.6-dev \
+  autoconf \
+  python3-dev \
+  python3-venv \
+  dh-systemd \
+  libz-dev && \
+  DEBIAN_FRONTEND=noninteractive apt-get clean && \
+  rm -rf /var/lib/apt/lists/*
+
+RUN curl -L --output piaware_builder.tar.gz https://github.com/flightaware/piaware_builder/archive/v${PIAWARE_VERSION}.tar.gz && \
+  sha256sum piaware_builder.tar.gz && echo "${PIAWARE_HASH} piaware_builder.tar.gz" | sha256sum -c
+
+RUN mkdir piaware_builder && cd piaware_builder && \
+  tar -xvf ../piaware_builder.tar.gz --strip-components=1
+
+RUN ./sensible-build.sh stretch && \
+  cd package-stretch
+
+RUN dpkg-buildpackage -b
+
+RUN dpkg -i ../piaware*.deb
 
 # final image #################################################################
 FROM base
