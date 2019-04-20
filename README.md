@@ -41,17 +41,14 @@ I'll post a more comprehensive version list at a later date
 ## Edit variables
 Edit the 'variables' files with the required keys and locations for each of the services
 
-### variables-dump1090.env
-Nothing to configure here
+### variables-common.env
+*These are not optional and must be set*
+* ADSB_LATITUDE ; The latitude of your ADSB Antenna ( In decimal format ex. 36.000)
+* ADSB_LONGITUDE ; The longitude of your ADSB Antenna (In decimal format ex. -115.000)
+* ADSB_ALTITUDE ; The altitude above sea level for your ADSB Antenna (In decimal format ex. 500.00)
 
 ### variables-adsbexchange-mlat.env
-* MLAT_CLIENT_LATITUDE
-* MLAT_CLIENT_LONGITUDE
-* MLAT_CLIENT_ALTITUDE
 * MLAT_CLIENT_USER
-
-### variables-adsbhub.env
-Nothing to configure here
 
 ## variables-flightware.env
 Go to https://flightaware.com/adsb/piaware/claim
@@ -59,21 +56,13 @@ Go to https://flightaware.com/adsb/piaware/claim
 
 ### variables-flightradar24.env
 * FR24FEED_KEY: Your key. If you do not have one please run the client on any PC and enter the key here
-* FR24FEED_LATITUDE
-* FR24FEED_LONGITUDE
-* FR24FEED_ALTITUDE
 
 ### variables-openskynetwork.env
 * OPENSKY_USER=
 * OPENSKY_SERIAL=
-* DUMP1090_LAT=
-* DUMP1090_LON=
-* DUMP1090_ALT=
 
 ### variables-planefinder.env
 * PLANEFINDER_SHARECODE
-* PLANEFINDER_LATITUDE
-* PLANEFINDER_LONGITUDE
 
 ## Docker Hub Links
 * https://hub.docker.com/r/shoginn/docker-ads-b-dump1090/

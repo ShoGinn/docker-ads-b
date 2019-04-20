@@ -20,9 +20,9 @@ ping -c 3 "${DUMP1090_SERVER}"
 echo "Connecting to ${DUMP1090_SERVER}:${DUMP1090_PORT} to send to feed.adsbexchange:31090"
 mlat-client --input-type 'dump1090' \
             --input-connect "${DUMP1090_SERVER}:${DUMP1090_PORT}" \
-            --lat "${MLAT_CLIENT_LATITUDE}" \
-            --lon "${MLAT_CLIENT_LONGITUDE}" \
-            --alt "${MLAT_CLIENT_ALTITUDE}" \
+            --lat "${ADSB_LATITUDE}" \
+            --lon "${ADSB_LONGITUDE}" \
+            --alt "${ADSB_ALTITUDE}" \
             --user "${MLAT_CLIENT_USER}" \
             --server 'feed.adsbexchange.com:31090' \
             --no-udp \

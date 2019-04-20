@@ -19,8 +19,6 @@ services:
       - "30005:30005/tcp"
     devices:
       - "/dev/bus/usb"
-    env_file:
-      - variables-dump1090.env
     cap_add:
       - SYS_NICE
     restart: always
@@ -63,6 +61,7 @@ services:
       - dump1090
     env_file:
       - variables-planefinder.env
+      - variables-common.env
     restart: always
 
   # adsbexchange-mlat #########################################################
@@ -83,6 +82,7 @@ services:
       - dump1090
     env_file:
       - variables-adsbexchange-mlat.env
+      - variables-common.env
     restart: always
 
   # adsbhub ###################################################################
@@ -96,8 +96,6 @@ services:
         - shoginn/docker-ads-b-adsbhub:${TAG:-latest}
     depends_on:
       - dump1090
-    env_file:
-      - variables-adsbhub.env
     restart: always
 
   # openskynetwork ############################################################
@@ -113,6 +111,7 @@ services:
       - dump1090
     env_file:
       - variables-openskynetwork.env
+      - variables-common.env
     restart: always
 
   # flightaware ###############################################################
