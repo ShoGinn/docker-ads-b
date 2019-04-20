@@ -1,5 +1,14 @@
 # DEPRECEATED
 * I have moved to a multi-arch version of this that doesn't use docker-compose.
+## The Following are the new maintained images
+* https://hub.docker.com/r/shoginn/dump1090/
+* https://hub.docker.com/r/shoginn/adsbexchange-mlat/
+* https://hub.docker.com/r/shoginn/adsbhub/
+* https://hub.docker.com/r/shoginn/flightaware/
+* https://hub.docker.com/r/shoginn/flightradar24/
+* https://hub.docker.com/r/shoginn/openskynetwork/
+* https://hub.docker.com/r/shoginn/planefinder/
+
 
 # Docker ADS-B
 Docker containers for ADS-B receiving and submission to multiple websites
