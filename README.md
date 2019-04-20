@@ -1,3 +1,6 @@
+# DEPRECEATED
+* I have moved to a multi-arch version of this that doesn't use docker-compose.
+
 # Docker ADS-B
 Docker containers for ADS-B receiving and submission to multiple websites
 
@@ -23,7 +26,6 @@ This setup currently is for docker on your raspberry pi running raspbian.
 
 It requires a manual raspbian/docker-compose setup (not the normal apt package) due to the version of yaml im using.
 
-I'll post a more comprehensive version list at a later date
 
 # Status
 | Branch | Status |
